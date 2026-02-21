@@ -182,9 +182,20 @@ export default function Home() {
   }, [])
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
     setIsMenuOpen(false)
+    const element = document.getElementById(id)
+    if (element) {
+      setTimeout(() => {
+        const headerOffset = 80
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.scrollY - headerOffset
+    
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        })
+      }, 300)
+    }
   }
 
   const copyToClipboard = async (text: string, location: string) => {
@@ -281,7 +292,7 @@ export default function Home() {
                   { label: 'Преимущества', id: 'advantages' },
                   { label: 'Контакты', id: 'contacts' },
                 ].map((item) => (
-                  <button key={item.id} onClick={() => scrollToSection(item.id)} className="block w-full text-left py-3 text-sm tracking-wider uppercase font-medium" style={{ color: colors.text }}>
+                  <button key={item.id} onClick={() => scrollToSection(item.id)} className="block w-full text-left py-3 text-sm tracking-wider uppercase font-medium relative z-50 cursor-pointer" style={{ color: colors.text }}>
                     {item.label}
                   </button>
                 ))}
