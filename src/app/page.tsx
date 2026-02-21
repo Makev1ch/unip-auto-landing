@@ -138,11 +138,17 @@ const reviews: Review[] = [
   },
 ]
 
-const FEATURED_PREVIEW_LIMIT = 260
+const useReviews = () => {
+  const [expandedReviews, setExpandedReviews] = useState<Record<number, boolean>>({})
 
-const getReviewPreview = (text: string) => {
-  if (text.length <= FEATURED_PREVIEW_LIMIT) return text
-  return `${text.slice(0, FEATURED_PREVIEW_LIMIT).trimEnd()}…`
+  const toggleReview = (index: number) => {
+    setExpandedReviews(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }))
+  }
+
+  return { expandedReviews, toggleReview }
 }
 
 const advantages = [
@@ -152,11 +158,20 @@ const advantages = [
   { title: "Удобная запись", description: "Запишем по телефону или в Telegram — как вам удобно." },
 ]
 
+const FEATURED_PREVIEW_LIMIT = 260
+const GRID_PREVIEW_LIMIT = 150
+
+const getReviewPreview = (text: string, limit: number) => {
+  if (text.length <= limit) return text
+  return `${text.slice(0, limit).trimEnd()}...`
+}
+
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [copiedLocation, setCopiedLocation] = useState<string | null>(null)
-  const [isFeaturedExpanded, setIsFeaturedExpanded] = useState(false)
+  const { expandedReviews, toggleReview } = useReviews()
+  
   const primaryReviews = reviews.slice(0, 3)
   const featuredReview = reviews[3] || reviews[0] || null
 
@@ -591,32 +606,50 @@ export default function Home() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6"
           >
-            {primaryReviews.map((review, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-                className="p-8 rounded-2xl relative overflow-hidden"
-                style={{ backgroundColor: colors.background }}
-              >
-                <div className="absolute top-4 right-4" style={{ color: colors.accent }}><QuoteIcon /></div>
-                <div className="flex gap-0.5 mb-5" style={{ color: '#FFB800' }}>
-                  <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
-                </div>
-                <p className="mb-6 leading-relaxed text-lg" style={{ color: colors.text }}>&quot;{review.text}&quot;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: colors.accent, color: colors.text }}>
-                    {review.avatar}
+            {primaryReviews.map((review, index) => {
+              const isExpanded = !!expandedReviews[index]
+              const showButton = review.text.length > GRID_PREVIEW_LIMIT
+              const text = isExpanded ? review.text : getReviewPreview(review.text, GRID_PREVIEW_LIMIT)
+
+              return (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  whileHover={{ y: -5 }}
+                  className="p-8 rounded-2xl relative overflow-hidden flex flex-col h-full"
+                  style={{ backgroundColor: colors.background }}
+                >
+                  <div className="absolute top-4 right-4" style={{ color: colors.accent }}><QuoteIcon /></div>
+                  <div className="flex gap-0.5 mb-5" style={{ color: '#FFB800' }}>
+                    <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
                   </div>
-                  <div>
-                    <p className="font-bold" style={{ color: colors.text }}>{review.author}</p>
-                    {review.date ? (
-                      <p className="text-xs" style={{ color: colors.text, opacity: 0.5 }}>{review.date}</p>
-                    ) : null}
+                  <p className="mb-4 leading-relaxed text-lg flex-grow" style={{ color: colors.text }}>&quot;{text}&quot;</p>
+                  
+                  {showButton && (
+                    <button
+                      type="button"
+                      onClick={() => toggleReview(index)}
+                      className="text-sm font-semibold mb-6 text-left"
+                      style={{ color: colors.accent }}
+                    >
+                      {isExpanded ? 'Свернуть' : 'Читать полностью'}
+                    </button>
+                  )}
+                  
+                  <div className={`flex items-center gap-3 ${!showButton ? 'mt-auto' : ''}`}>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: colors.accent, color: colors.text }}>
+                      {review.avatar}
+                    </div>
+                    <div>
+                      <p className="font-bold" style={{ color: colors.text }}>{review.author}</p>
+                      {review.date ? (
+                        <p className="text-xs" style={{ color: colors.text, opacity: 0.5 }}>{review.date}</p>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              )
+            })}
           </motion.div>
 
           {featuredReview ? (
@@ -633,18 +666,8 @@ export default function Home() {
                 <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
               </div>
               <p className="mb-8 leading-relaxed text-xl" style={{ color: colors.text }}>
-                &quot;{isFeaturedExpanded ? featuredReview.text : getReviewPreview(featuredReview.text)}&quot;
+                &quot;{featuredReview.text}&quot;
               </p>
-              {featuredReview.text.length > FEATURED_PREVIEW_LIMIT ? (
-                <button
-                  type="button"
-                  onClick={() => setIsFeaturedExpanded(!isFeaturedExpanded)}
-                  className="text-sm font-semibold mb-4"
-                  style={{ color: colors.accent }}
-                >
-                  {isFeaturedExpanded ? 'Свернуть отзыв' : 'Читать полностью'}
-                </button>
-              ) : null}
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold" style={{ backgroundColor: colors.accent, color: colors.text }}>
                   {featuredReview.avatar}
