@@ -59,12 +59,6 @@ const ClockIcon = () => (
   </svg>
 )
 
-const WhatsAppIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-  </svg>
-)
-
 const TelegramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
@@ -98,6 +92,8 @@ const ADDRESS_CITY = 'г. Иркутск'
 const ADDRESS_STREET = '2-я Горьковская, 35'
 const ADDRESS_FULL = `${ADDRESS_CITY}, ${ADDRESS_STREET}`
 
+const TELEGRAM_URL = 'https://t.me/+79500787977#'
+
 // Services
 const services = [
   'Компьютерная диагностика',
@@ -114,27 +110,55 @@ type Review = {
   author: string
   avatar: string
   date?: string
-  isFeatured?: boolean
 }
 
 const reviews: Review[] = [
-  { text: "Ребята молодцы, профессионалы своего дела!", author: "Алексей К.", avatar: "А" },
-  { text: "Не первый раз обслуживаю свою машину в данном автосервисе, качеством и подходом к ремонту доволен", author: "Дмитрий С.", avatar: "Д" },
-  { text: "Много что ремонтировал, адекватные люди работают, цены порядочные.", author: "Игорь М.", avatar: "И" },
-  { text: "Сервис отличный. Менял передний бампер. Работа была выполнена за время, оговореное при приемке машины в работу. Замена выполнена без нареканий и качественно. Ребята действительно знают своё дело — всё объяснили, показали, что и как делали. Цены адекватные, лишнего не навязывают. Большое спасибо мастерам за профессионализм и человеческое отношение! Однозначно рекомендую этот сервис всем знакомым.", author: "Михаил П.", avatar: "М", isFeatured: true },
+  {
+    text: 'Ребята молодцы, профессионалы своего дела!',
+    author: 'Людмила О.',
+    avatar: 'Л',
+    date: '31 января 2026',
+  },
+  {
+    text: 'Заехал чисто случайно. Перед развалом надо было заменить два сайлентблока. Зашёл, спросил — не отказали, сделали быстро и качественно. Жаль только, что у ребят нет развала. Там, где делал развал, спросил, как сделали — всё отлично. Советую.',
+    author: 'Ден Лисичкин',
+    avatar: 'Д',
+    date: '22 января 2026',
+  },
+  {
+    text: 'Добрый день всем, особенно команде автомехаников, работающих в автосервисе Unip Auto, за добросовестное, своевременное, бюджетное и не менее качественное обслуживание. Ребята работают профессионально, разъясняют все проблемы и нюансы по ремонту авто, мастера работают быстро и чётко со знанием своего дела. В целом очень доволен обслуживанием своего авто и желаю продолжать в том же духе.',
+    author: 'Андрей Колмаков',
+    avatar: 'А',
+    date: '23 января 2026',
+  },
+  {
+    text: 'Сервис отличный. Менял передний бампер. Работа была выполнена за время, оговорённое при приёмке машины в работу. Замена выполнена без нареканий и качественно. Ребята действительно знают своё дело — всё объяснили, показали, что и как делали. Цены адекватные, лишнего не навязывают. Большое спасибо мастерам за профессионализм и человеческое отношение. Однозначно рекомендую этот сервис всем знакомым.',
+    author: 'Михаил П.',
+    avatar: 'М',
+  },
 ]
+
+const FEATURED_PREVIEW_LIMIT = 260
+
+const getReviewPreview = (text: string) => {
+  if (text.length <= FEATURED_PREVIEW_LIMIT) return text
+  return `${text.slice(0, FEATURED_PREVIEW_LIMIT).trimEnd()}…`
+}
 
 const advantages = [
   { title: "Точная диагностика", description: "Покажем, что именно нужно делать и почему. Никаких лишних работ и догадок." },
   { title: "Цена фиксируется до начала", description: "Никаких сюрпризов. Итог согласуем заранее — сумма не меняется в процессе ремонта." },
   { title: "Без навязывания", description: "Рекомендуем только то, что реально нужно для безопасности и ресурса автомобиля." },
-  { title: "Удобная запись", description: "Запишем по телефону, WhatsApp или Telegram — как вам удобно." },
+  { title: "Удобная запись", description: "Запишем по телефону или в Telegram — как вам удобно." },
 ]
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [copiedLocation, setCopiedLocation] = useState<string | null>(null)
+  const [isFeaturedExpanded, setIsFeaturedExpanded] = useState(false)
+  const primaryReviews = reviews.slice(0, 3)
+  const featuredReview = reviews[3] || reviews[0] || null
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -567,7 +591,7 @@ export default function Home() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6"
           >
-            {reviews.filter(r => !r.isFeatured).map((review, index) => (
+            {primaryReviews.map((review, index) => (
               <motion.div
                 key={index}
                 variants={fadeInUp}
@@ -595,9 +619,8 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {reviews.filter(r => r.isFeatured).map((review, index) => (
+          {featuredReview ? (
             <motion.div
-              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -609,20 +632,36 @@ export default function Home() {
               <div className="flex gap-0.5 mb-5" style={{ color: '#FFB800' }}>
                 <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
               </div>
-              <p className="mb-8 leading-relaxed text-xl" style={{ color: colors.text }}>&quot;{review.text}&quot;</p>
+              <p className="mb-8 leading-relaxed text-xl" style={{ color: colors.text }}>
+                &quot;{isFeaturedExpanded ? featuredReview.text : getReviewPreview(featuredReview.text)}&quot;
+              </p>
+              {featuredReview.text.length > FEATURED_PREVIEW_LIMIT ? (
+                <button
+                  type="button"
+                  onClick={() => setIsFeaturedExpanded(!isFeaturedExpanded)}
+                  className="text-sm font-semibold mb-4"
+                  style={{ color: colors.accent }}
+                >
+                  {isFeaturedExpanded ? 'Свернуть отзыв' : 'Читать полностью'}
+                </button>
+              ) : null}
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold" style={{ backgroundColor: colors.accent, color: colors.text }}>
-                  {review.avatar}
+                  {featuredReview.avatar}
                 </div>
                 <div>
-                  <p className="font-bold text-lg" style={{ color: colors.text }}>{review.author}</p>
-                  {review.date ? (
-                    <p className="text-sm" style={{ color: colors.text, opacity: 0.5 }}>{review.date}</p>
+                  <p className="font-bold text-lg" style={{ color: colors.text }}>
+                    {featuredReview.author}
+                  </p>
+                  {featuredReview.date ? (
+                    <p className="text-sm" style={{ color: colors.text, opacity: 0.5 }}>
+                      {featuredReview.date}
+                    </p>
                   ) : null}
                 </div>
               </div>
             </motion.div>
-          ))}
+          ) : null}
 
           <motion.div 
             initial={{ opacity: 0 }}
@@ -665,7 +704,7 @@ export default function Home() {
             className="text-lg mb-8" 
             style={{ color: colors.text, opacity: 0.9 }}
           >
-          Нажмите на номер, чтобы скопировать, или напишите нам в WhatsApp/Telegram.
+          Нажмите на номер, чтобы скопировать, или напишите нам в Telegram.
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -685,28 +724,19 @@ export default function Home() {
                 {copiedLocation === 'cta' ? 'Скопировано!' : PHONE_DISPLAY}
               </span>
             </motion.button>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href={`https://wa.me/${PHONE_RAW.replace('+', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 font-bold text-lg tracking-wider uppercase rounded-xl border-2"
-              style={{ borderColor: colors.text, color: colors.text }}
-            >
-              WhatsApp
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href={`https://t.me/${PHONE_RAW.replace('+', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 font-bold text-lg tracking-wider uppercase rounded-xl border-2"
-              style={{ borderColor: colors.text, color: colors.text }}
-            >
-              Telegram
-            </motion.a>
+            {TELEGRAM_URL ? (
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={TELEGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 font-bold text-lg tracking-wider uppercase rounded-xl border-2"
+                style={{ borderColor: colors.text, color: colors.text }}
+              >
+                Telegram
+              </motion.a>
+            ) : null}
           </motion.div>
         </div>
       </section>
@@ -791,28 +821,19 @@ export default function Home() {
                 </span>
               </motion.button>
               <div className="flex gap-4 mt-4">
-                <motion.a
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href={`https://wa.me/${PHONE_RAW.replace('+', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#25D366' }}
-                  title="Написать в WhatsApp"
-                >
-                  <WhatsAppIcon />
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href={`https://t.me/${PHONE_RAW.replace('+', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#0088cc' }}
-                  title="Написать в Telegram"
-                >
-                  <TelegramIcon />
-                </motion.a>
+                {TELEGRAM_URL ? (
+                  <motion.a
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    href={TELEGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#0088cc' }}
+                    title="Написать в Telegram"
+                  >
+                    <TelegramIcon />
+                  </motion.a>
+                ) : null}
               </div>
             </motion.div>
           </motion.div>
@@ -840,24 +861,17 @@ export default function Home() {
             </p>
             <div className="justify-self-end flex flex-col items-end gap-2 w-full md:w-auto">
               <div className="flex items-center gap-4">
-                <motion.a
-                  whileHover={{ scale: 1.2 }}
-                  href={`https://wa.me/${PHONE_RAW.replace('+', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#25D366' }}
-                >
-                  <WhatsAppIcon />
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.2 }}
-                  href={`https://t.me/${PHONE_RAW.replace('+', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#0088cc' }}
-                >
-                  <TelegramIcon />
-                </motion.a>
+                {TELEGRAM_URL ? (
+                  <motion.a
+                    whileHover={{ scale: 1.2 }}
+                    href={TELEGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#0088cc' }}
+                  >
+                    <TelegramIcon />
+                  </motion.a>
+                ) : null}
               </div>
             </div>
           </div>
