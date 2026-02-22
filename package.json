@@ -3,14 +3,12 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
-    "build": "next build && node -e \"const fs=require('fs');const path=require('path');const ensure=(p)=>fs.mkdirSync(p,{recursive:true});const cp=(src,dst)=>{ensure(path.dirname(dst));fs.cpSync(src,dst,{recursive:true,force:true});};cp(path.join('.next','static'),path.join('.next','standalone','.next','static'));cp('public',path.join('.next','standalone','public'));\"",
-    "start": "NODE_ENV=production node .next/standalone/server.js",
-    "lint": "eslint ."
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.6.1",
-    "@vercel/speed-insights": "^1.3.1",
     "framer-motion": "^12.34.1",
     "next": "^16.1.1",
     "react": "^19.0.0",
